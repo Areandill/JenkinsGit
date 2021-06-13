@@ -10,7 +10,7 @@ resource "aws_instance" "WebServer" {
     security_groups = ["Apache"]
     
     provisioner "local-exec" {
-    command = "echo ${aws_instance.WebServer.public_ip} >> output.tf"
+    command = "echo ${aws_instance.WebServer.public_ip} >> output"
     }
 tags = {
     Name = "WebServer"
