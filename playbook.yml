@@ -1,4 +1,4 @@
-- name: Install Apache Web Server on AMI Linux. Upload web page example
+- name: Install Apache Web Server on Ubuntu
   hosts: all
   become: yes
 
