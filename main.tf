@@ -9,12 +9,13 @@ resource "aws_instance" "WebServer" {
     instance_type = "t2.micro"
     security_groups = ["Apache"]
     
-    provisioner "local-exec" {
-    command = "echo ${aws_instance.WebServer.public_ip} >> output"
-    }
+    
 tags = {
     Name = "WebServer"
     Owner = "Oleksii Martyniuk"
     Project = "Final Project"
   }
+}
+output "pub_ips" {
+    value = aws_instance.WebServer.public_ip
 }
