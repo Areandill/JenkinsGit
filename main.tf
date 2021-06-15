@@ -17,7 +17,3 @@ tags = {
  }
   
 }
-output "pub_ips" {
-    value = aws_instance.WebServer.public_ip
-    sensitive = true
-}
