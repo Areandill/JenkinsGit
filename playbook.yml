@@ -6,7 +6,7 @@
     source_file: /etc/ansible/index.html
     dest_dir: /var/www/html/
 
-    - block: #Installation
+  tasks: 
 
     - name: Install Apache Web Server on AWS Ubuntu
       apt:  update_cache=yes name=apache2 state=latest
