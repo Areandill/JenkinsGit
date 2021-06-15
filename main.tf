@@ -15,5 +15,8 @@ tags = {
     Owner = "Oleksii Martyniuk"
     Project = "Final Project"
  }
-  
+}
+output "pub_ips" {
+    value = aws_instance.WebServer.public_ip
+    
 }
