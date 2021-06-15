@@ -21,7 +21,7 @@
       mode: 0664 
     
     - name: Copy index.html to target server
-      copy: src={{ source_file }} dest={{ destin_file }} mode=0555  
+      copy: src={{ source_file }} dest={{ destin_dir }} mode=0555  
   
   handlers:
     - name: Restart Apache on AWS Ubuntu
