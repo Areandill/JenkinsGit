@@ -17,6 +17,6 @@ tags = {
  }
   
 }
-output "instance_ips" {
+output "pub_ips" {
     value = aws_instance.WebServer.public_ip
 }
