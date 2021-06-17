@@ -1,0 +1,39 @@
+pipeline {
+    agent {label 'jslave'}
+      stages {
+        stage('GitHub clone') {
+         steps {
+                git credentialsId: 'github-key', url: 'git@github.com:Areandill/JenkinsGit.git'
+            }
+            }
+        
+         stage('Move Files') {
+         steps {
+                script{
+                sh """ 
+                 mv index.html /etc/ansible/
+                 mv playbook.yml /etc/ansible/
+                 mv main.tf /usr/bin/terraform/ 
+                 mv variables.tf /usr/bin/terraform/
+                 """
+            }  
+            }
+        }
+      
+        stage('Terraform') {
+            steps {
+            withCredentials([aws(accessKeyVariable: "AWS_ACCESS_KEY_ID", credentialsId: "ter-aws-cred", secretKeyVariable: "AWS_SECRET_ACCESS_KEY")]) {
+                script {
+                sh """
+                cd /usr/bin/terraform/
+                ./terraform init
+                ./terraform plan -var="access_key=$AWS_ACCESS_KEY_ID" -var="secret_key=$AWS_SECRET_ACCESS_KEY" -input=false -out=/usr/bin/terraform/plan
+                ./terraform apply -auto-approve "plan"
+                """
+                }
+            }
+            }
+         }
+      
+ }     
+}

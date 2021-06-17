@@ -1,0 +1,27 @@
+pipeline {
+    agent {label 'jslave'}
+    stages {
+     stage('Ip for Ansible') {
+            environment {
+                PUB_IP = sh(script:"""
+                cd /usr/bin/terraform/
+                /usr/bin/terraform/terraform output -raw pub_ips """, returnStdout: true)
+                }
+            steps {    
+            script {
+                    sh 'echo Ubuntu ansible_host="$PUB_IP" ansible_python_interpreter=/usr/bin/python3 ansible_ssh_user=ubuntu >> /etc/ansible/hosts'
+                    }
+            }
+        }
+         stage('Ansible playbook') {   
+            steps {
+                 withCredentials([file(credentialsId: 'pem', variable: 'key')]) {
+                    sh """ 
+                    export ANSIBLE_HOST_KEY_CHECKING=False
+                    ansible-playbook /etc/ansible/playbook.yml -i /etc/ansible/hosts --private-key $key
+                    """
+                 }
+                 }
+             }
+             }
+}
