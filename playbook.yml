@@ -1,6 +1,7 @@
-- name: Install Apache Web Server on Ubuntu
+- name: Install Apache Web Server on Ubuntu and change default  web page 
   hosts: all
   become: yes
+  remote_user: ubuntu
 
   vars:
     source_file: /etc/ansible/index.html
@@ -17,4 +18,4 @@
     - name: Copy index.html to target server
       copy: src={{ source_file }} dest={{ dest_dir }} mode=0555  
   
-  
+      
