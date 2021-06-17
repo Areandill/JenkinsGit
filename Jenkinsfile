@@ -48,7 +48,7 @@ pipeline {
         }
          stage('Ansible playbook') {   
             steps {
-                 withCredentials([file(credentialsId: 'pem', variable: 'key')]) {
+                 withCredentials([file(credentialsId: "pem", variable: "key")]) {
                     sh """ 
                     export ANSIBLE_HOST_KEY_CHECKING=False
                     ansible-playbook /etc/ansible/playbook.yml -i /etc/ansible/hosts --private-key $key
